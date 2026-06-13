@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formules — Révision Maths Terminale</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">Révision Maths</a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="cours.html">Cours</a>
+      <a href="exercices.html">Exercices</a>
+      <a href="formules.html" class="active">Formules</a>
+      <a href="jeux.html">Jeux</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">📋 Formules essentielles</h1>
+    <p class="page-subtitle">Toutes les formules du programme Terminale. Clique sur une carte pour copier la formule.</p>
+
+    <input class="formule-search-bar" type="text" id="search" placeholder="🔍  Rechercher une formule… (ex : dérivée, intégrale, ln…)" oninput="filterFormules()" />
+
+    <div id="no-result" style="display:none;color:var(--muted);text-align:center;padding:2rem">Aucune formule trouvée pour cette recherche.</div>
+
+    <!-- DÉRIVÉES -->
+    <div class="formule-section" data-section="derivees">
+      <div class="formule-section-title">📐 Dérivées</div>
+      <div class="formule-grid">
+        <div class="formule-card" onclick="copyFormule(this, 'xⁿ → n·xⁿ⁻¹')" data-tags="derivee puissance xn">
+          <div class="formule-card-name">Puissance</div>
+          <div class="formule-card-expr">(xⁿ)' = n·xⁿ⁻¹</div>
+          <div class="formule-card-desc">Valable pour tout n réel. Ex : (x³)' = 3x²</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '√x → 1/(2√x)')" data-tags="derivee racine carre">
+          <div class="formule-card-name">Racine carrée</div>
+          <div class="formule-card-expr">(√x)' = 1 / (2√x)</div>
+          <div class="formule-card-desc">Définie pour x > 0</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'eˣ → eˣ')" data-tags="derivee exponentielle exp">
+          <div class="formule-card-name">Exponentielle</div>
+          <div class="formule-card-expr">(eˣ)' = eˣ</div>
+          <div class="formule-card-desc">La fonction exponentielle est sa propre dérivée.</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'ln(x) → 1/x')" data-tags="derivee logarithme ln">
+          <div class="formule-card-name">Logarithme népérien</div>
+          <div class="formule-card-expr">(ln x)' = 1/x</div>
+          <div class="formule-card-desc">Définie pour x > 0</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'sin(x) → cos(x)')" data-tags="derivee sinus trig">
+          <div class="formule-card-name">Sinus</div>
+          <div class="formule-card-expr">(sin x)' = cos x</div>
+          <div class="formule-card-desc">En radians</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'cos(x) → -sin(x)')" data-tags="derivee cosinus trig">
+          <div class="formule-card-name">Cosinus</div>
+          <div class="formule-card-expr">(cos x)' = −sin x</div>
+          <div class="formule-card-desc">En radians</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '(u·v)′ = u′·v + u·v′')" data-tags="derivee produit">
+          <div class="formule-card-name">Produit (u·v)</div>
+          <div class="formule-card-expr">(uv)' = u'v + uv'</div>
+          <div class="formule-card-desc">Dérivée d'un produit de deux fonctions</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '(u/v)′ = (u′v − uv′)/v²')" data-tags="derivee quotient fraction">
+          <div class="formule-card-name">Quotient (u/v)</div>
+          <div class="formule-card-expr">(u/v)' = (u'v − uv') / v²</div>
+          <div class="formule-card-desc">Avec v ≠ 0</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '(u∘v)′ = v′·u′∘v')" data-tags="derivee composee chaine">
+          <div class="formule-card-name">Composée (u∘v)</div>
+          <div class="formule-card-expr">(f∘g)' = g' · f'∘g</div>
+          <div class="formule-card-desc">Ex : (e^(2x))' = 2·e^(2x)</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTÉGRALES -->
+    <div class="formule-section" data-section="integrales">
+      <div class="formule-section-title">∫ Intégrales</div>
+      <div class="formule-grid">
+        <div class="formule-card" onclick="copyFormule(this, '∫ xⁿ dx = xⁿ⁺¹/(n+1) + C')" data-tags="integrale puissance">
+          <div class="formule-card-name">Puissance</div>
+          <div class="formule-card-expr">∫ xⁿ dx = xⁿ⁺¹/(n+1) + C</div>
+          <div class="formule-card-desc">Avec n ≠ −1</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '∫ 1/x dx = ln|x| + C')" data-tags="integrale logarithme ln">
+          <div class="formule-card-name">1/x</div>
+          <div class="formule-card-expr">∫ 1/x dx = ln|x| + C</div>
+          <div class="formule-card-desc">Cas n = −1</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '∫ eˣ dx = eˣ + C')" data-tags="integrale exponentielle exp">
+          <div class="formule-card-name">Exponentielle</div>
+          <div class="formule-card-expr">∫ eˣ dx = eˣ + C</div>
+          <div class="formule-card-desc">Primitives de l'exponentielle</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '∫ cos x dx = sin x + C')" data-tags="integrale cosinus trig">
+          <div class="formule-card-name">Cosinus</div>
+          <div class="formule-card-expr">∫ cos x dx = sin x + C</div>
+          <div class="formule-card-desc">En radians</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '∫ sin x dx = −cos x + C')" data-tags="integrale sinus trig">
+          <div class="formule-card-name">Sinus</div>
+          <div class="formule-card-expr">∫ sin x dx = −cos x + C</div>
+          <div class="formule-card-desc">En radians</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '∫ₐᵇ f(x) dx = F(b) − F(a)')" data-tags="integrale definie calcul">
+          <div class="formule-card-name">Intégrale définie</div>
+          <div class="formule-card-expr">∫ₐᵇ f = F(b) − F(a)</div>
+          <div class="formule-card-desc">F est une primitive quelconque de f</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'Aire = |∫ₐᵇ f(x) dx|')" data-tags="integrale aire surface">
+          <div class="formule-card-name">Aire sous une courbe</div>
+          <div class="formule-card-expr">Aire = |∫ₐᵇ f(x) dx|</div>
+          <div class="formule-card-desc">En unités d'aire (attention au signe !)</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUITES -->
+    <div class="formule-section" data-section="suites">
+      <div class="formule-section-title">🔢 Suites</div>
+      <div class="formule-grid">
+        <div class="formule-card" onclick="copyFormule(this, 'Sn = n·u₀ + n(n−1)/2·r (arithmétique)')" data-tags="suite arithmetique somme">
+          <div class="formule-card-name">Somme arithmétique</div>
+          <div class="formule-card-expr">Sₙ = (u₀ + uₙ) × (n+1) / 2</div>
+          <div class="formule-card-desc">Somme des n+1 premiers termes d'une suite arithmétique</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'uₙ = u₀ + n·r (arithmétique)')" data-tags="suite arithmetique terme">
+          <div class="formule-card-name">Terme général — arithmétique</div>
+          <div class="formule-card-expr">uₙ = u₀ + n·r</div>
+          <div class="formule-card-desc">r = raison de la suite</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'uₙ = u₀ · qⁿ (géométrique)')" data-tags="suite geometrique terme">
+          <div class="formule-card-name">Terme général — géométrique</div>
+          <div class="formule-card-expr">uₙ = u₀ · qⁿ</div>
+          <div class="formule-card-desc">q = raison, q ≠ 0 et q ≠ 1</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'Sn = u₀·(1−qⁿ⁺¹)/(1−q) (géométrique)')" data-tags="suite geometrique somme">
+          <div class="formule-card-name">Somme géométrique</div>
+          <div class="formule-card-expr">Sₙ = u₀ · (1 − qⁿ⁺¹) / (1 − q)</div>
+          <div class="formule-card-desc">Valide pour q ≠ 1</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROBABILITÉS -->
+    <div class="formule-section" data-section="probas">
+      <div class="formule-section-title">🎲 Probabilités</div>
+      <div class="formule-grid">
+        <div class="formule-card" onclick="copyFormule(this, 'P(A∪B) = P(A) + P(B) − P(A∩B)')" data-tags="proba union intersection">
+          <div class="formule-card-name">Union de deux événements</div>
+          <div class="formule-card-expr">P(A∪B) = P(A) + P(B) − P(A∩B)</div>
+          <div class="formule-card-desc">Formule générale (sans hypothèse d'incompatibilité)</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'P(A∩B) = P(A) × P(B|A)')" data-tags="proba conditionnelle intersection">
+          <div class="formule-card-name">Probabilité conditionnelle</div>
+          <div class="formule-card-expr">P(A∩B) = P(A) × P(B|A)</div>
+          <div class="formule-card-desc">P(B|A) = probabilité de B sachant A</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'P(Aᵢ∩B) / P(B) = P(Aᵢ) × P(B|Aᵢ) (Bayes)')" data-tags="proba bayes">
+          <div class="formule-card-name">Formule de Bayes</div>
+          <div class="formule-card-expr">P(Aᵢ|B) = P(Aᵢ)·P(B|Aᵢ) / P(B)</div>
+          <div class="formule-card-desc">Permet d'inverser la conditionnelle</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'E(X) = np, σ²(X) = npq (loi binomiale)')" data-tags="proba binomiale esperance variance">
+          <div class="formule-card-name">Loi binomiale B(n, p)</div>
+          <div class="formule-card-expr">E(X) = np   —   σ²(X) = np(1−p)</div>
+          <div class="formule-card-desc">X suit B(n,p) : n répétitions, probabilité p</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'E(X) = μ, σ²(X) = σ² (loi normale N(μ,σ))')" data-tags="proba normale gaussienne">
+          <div class="formule-card-name">Loi normale N(μ, σ²)</div>
+          <div class="formule-card-expr">P(μ−2σ ≤ X ≤ μ+2σ) ≈ 0,954</div>
+          <div class="formule-card-desc">Règle des 2σ. Règle des 3σ : ≈ 0,997</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLEXES -->
+    <div class="formule-section" data-section="complexes">
+      <div class="formule-section-title">🔵 Nombres complexes</div>
+      <div class="formule-grid">
+        <div class="formule-card" onclick="copyFormule(this, 'z = a + ib, |z| = √(a²+b²)')" data-tags="complexe module argument">
+          <div class="formule-card-name">Module</div>
+          <div class="formule-card-expr">|z| = √(a² + b²)</div>
+          <div class="formule-card-desc">z = a + ib avec a, b ∈ ℝ</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'z = r(cos θ + i sin θ) = r·eⁱᶿ')" data-tags="complexe exponentielle forme trigonometrique">
+          <div class="formule-card-name">Forme exponentielle</div>
+          <div class="formule-card-expr">z = r·eⁱᶿ = r(cos θ + i sin θ)</div>
+          <div class="formule-card-desc">r = |z|, θ = arg(z)</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'z·z̄ = |z|²  (z̄ = a − ib)')" data-tags="complexe conjugue">
+          <div class="formule-card-name">Conjugué</div>
+          <div class="formule-card-expr">z · z̄ = |z|²</div>
+          <div class="formule-card-desc">z̄ = a − ib (symétrique par rapport à l'axe réel)</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'eⁱᵖⁱ + 1 = 0 (identité d\'Euler)')" data-tags="complexe euler identite">
+          <div class="formule-card-name">Identité d'Euler</div>
+          <div class="formule-card-expr">eⁱᵖⁱ + 1 = 0</div>
+          <div class="formule-card-desc">La plus belle formule des maths ✨</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GÉOMÉTRIE -->
+    <div class="formule-section" data-section="geometrie">
+      <div class="formule-section-title">📦 Géométrie dans l'espace</div>
+      <div class="formule-grid">
+        <div class="formule-card" onclick="copyFormule(this, 'AB⃗ = (xB−xA ; yB−yA ; zB−zA)')" data-tags="geometrie vecteur coordonnees">
+          <div class="formule-card-name">Coordonnées d'un vecteur</div>
+          <div class="formule-card-expr">AB⃗ = (xB−xA ; yB−yA ; zB−zA)</div>
+          <div class="formule-card-desc">Dans un repère orthonormé (O, i, j, k)</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, '|AB| = √((xB−xA)²+(yB−yA)²+(zB−zA)²)')" data-tags="geometrie distance norme">
+          <div class="formule-card-name">Distance entre deux points</div>
+          <div class="formule-card-expr">|AB| = √(Δx² + Δy² + Δz²)</div>
+          <div class="formule-card-desc">Formule de la distance dans ℝ³</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'u⃗·v⃗ = x₁x₂ + y₁y₂ + z₁z₂')" data-tags="geometrie produit scalaire">
+          <div class="formule-card-name">Produit scalaire</div>
+          <div class="formule-card-expr">u⃗·v⃗ = x₁x₂ + y₁y₂ + z₁z₂</div>
+          <div class="formule-card-desc">= |u||v|cos(angle). Nul si perpendiculaire.</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+        <div class="formule-card" onclick="copyFormule(this, 'Plan : ax + by + cz + d = 0, n⃗(a;b;c)')" data-tags="geometrie plan equation normale">
+          <div class="formule-card-name">Équation d'un plan</div>
+          <div class="formule-card-expr">ax + by + cz + d = 0</div>
+          <div class="formule-card-desc">n⃗(a ; b ; c) est un vecteur normal au plan</div>
+          <span class="formule-copied-badge">✓ Copié</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Révision Maths Terminale — Programme officiel</footer>
+
+  <script>
+    function copyFormule(card, text) {
+      navigator.clipboard.writeText(text).catch(() => {});
+      const badge = card.querySelector('.formule-copied-badge');
+      badge.classList.add('show');
+      setTimeout(() => badge.classList.remove('show'), 1800);
+    }
+
+    function filterFormules() {
+      const q = document.getElementById('search').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.formule-card');
+      const sections = document.querySelectorAll('.formule-section');
+      let totalVisible = 0;
+
+      cards.forEach(c => {
+        const tags = (c.dataset.tags || '') + ' ' + c.innerText.toLowerCase();
+        const match = !q || tags.includes(q);
+        c.style.display = match ? '' : 'none';
+        if (match) totalVisible++;
+      });
+
+      // Hide empty sections
+      sections.forEach(s => {
+        const visible = [...s.querySelectorAll('.formule-card')].some(c => c.style.display !== 'none');
+        s.style.display = visible ? '' : 'none';
+      });
+
+      document.getElementById('no-result').style.display = totalVisible === 0 ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeux — Révision Maths Terminale</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">Révision Maths</a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="cours.html">Cours</a>
+      <a href="exercices.html">Exercices</a>
+      <a href="formules.html">Formules</a>
+      <a href="jeux.html" class="active">Jeux</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">🎮 Jeux Maths</h1>
+    <p class="page-subtitle">Entraîne-toi en t'amusant — 4 modes de jeu pour réviser autrement.</p>
+
+    <div class="jeux-grid">
+
+      <!-- JEU 1 : DÉFI DÉRIVÉES (saisie libre) -->
+      <div class="jeu-card" id="jeu-derivees">
+        <div class="jeu-card-header">
+          <div class="jeu-icon">✏️</div>
+          <div>
+            <h3>Défi Dérivées</h3>
+            <div style="font-size:0.78rem;color:var(--muted)">Tape la bonne réponse</div>
+          </div>
+        </div>
+        <div class="jeu-question">Quelle est la dérivée de :</div>
+        <span class="jeu-expr" id="deriv-expr">x²</span>
+        <div class="jeu-input-row">
+          <input class="jeu-input" id="deriv-input" placeholder="Ex : 2x" onkeydown="if(event.key==='Enter') checkDerivee()" />
+          <button class="btn" onclick="checkDerivee()">OK</button>
+        </div>
+        <div class="jeu-feedback" id="deriv-fb"></div>
+        <div class="jeu-score-row">
+          <span>Score</span>
+          <span class="jeu-score-val" id="deriv-score">0 / 0</span>
+        </div>
+      </div>
+
+      <!-- JEU 2 : FLASHCARDS -->
+      <div class="jeu-card" id="jeu-flash">
+        <div class="jeu-card-header">
+          <div class="jeu-icon">🃏</div>
+          <div>
+            <h3>Flashcards Formules</h3>
+            <div style="font-size:0.78rem;color:var(--muted)">Clique pour révéler la réponse</div>
+          </div>
+        </div>
+        <div class="flashcard-hint">👆 Clique sur la carte pour la retourner</div>
+        <div class="flashcard-wrap" id="flash-card" onclick="flipCard()">
+          <div class="flashcard-inner">
+            <div class="flashcard-front" id="flash-front">Formule ici</div>
+            <div class="flashcard-back" id="flash-back">Réponse ici</div>
+          </div>
+        </div>
+        <div class="flashcard-btns" style="margin-top:0.5rem">
+          <button class="btn btn-outline" style="flex:1" onclick="rateCard(false)">😕 À revoir</button>
+          <button class="btn" style="flex:1" onclick="rateCard(true)">✅ Je sais</button>
+        </div>
+        <div class="jeu-score-row">
+          <span>Cartes restantes</span>
+          <span class="jeu-score-val" id="flash-remaining">—</span>
+        </div>
+      </div>
+
+      <!-- JEU 3 : SPEED QUIZ (chrono) -->
+      <div class="jeu-card" id="jeu-speed">
+        <div class="jeu-card-header">
+          <div class="jeu-icon">⚡</div>
+          <div>
+            <h3>Speed Quiz</h3>
+            <div style="font-size:0.78rem;color:var(--muted)">10 secondes par question</div>
+          </div>
+        </div>
+        <div id="speed-start-area" style="text-align:center;padding:0.5rem 0 1rem">
+          <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1rem">Réponds vite ! Chaque bonne réponse rapporte 1 point, mauvaise = −1.</p>
+          <button class="btn" onclick="startSpeed()">▶ Démarrer</button>
+        </div>
+        <div id="speed-game-area" style="display:none">
+          <div class="timer-display" id="speed-timer">10</div>
+          <div class="timer-bar"><div class="timer-fill" id="speed-fill" style="width:100%"></div></div>
+          <div class="jeu-question" id="speed-q" style="font-weight:600;margin-bottom:0.5rem"></div>
+          <div class="mc-options" id="speed-opts"></div>
+        </div>
+        <div id="speed-result-area" style="display:none;text-align:center;padding:0.5rem 0">
+          <div style="font-size:2.5rem;font-weight:700;color:var(--primary-light)" id="speed-final">0</div>
+          <div style="color:var(--muted);font-size:0.88rem;margin-bottom:1rem">points</div>
+          <button class="btn btn-outline" onclick="startSpeed()">🔄 Rejouer</button>
+        </div>
+        <div class="jeu-score-row" id="speed-score-row" style="display:none">
+          <span>Score en cours</span>
+          <span class="jeu-score-val" id="speed-score">0</span>
+        </div>
+      </div>
+
+      <!-- JEU 4 : ASSOCIER (matching) -->
+      <div class="jeu-card" id="jeu-match">
+        <div class="jeu-card-header">
+          <div class="jeu-icon">🔗</div>
+          <div>
+            <h3>Associer</h3>
+            <div style="font-size:0.78rem;color:var(--muted)">Associe fonction et dérivée</div>
+          </div>
+        </div>
+        <p style="font-size:0.83rem;color:var(--muted);margin-bottom:0.85rem">Clique sur une fonction puis sur sa dérivée.</p>
+        <div class="match-grid" id="match-grid"></div>
+        <div class="jeu-feedback" id="match-fb" style="margin-top:0.75rem"></div>
+        <div class="jeu-score-row">
+          <span>Paires trouvées</span>
+          <span class="jeu-score-val" id="match-score">0 / 5</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>Révision Maths Terminale — Programme officiel</footer>
+
+<script>
+/* ==================== JEU 1 : DÉRIVÉES ==================== */
+const derivQuestions = [
+  { expr: 'x²',        ans: ['2x'] },
+  { expr: 'x³',        ans: ['3x²', '3x2'] },
+  { expr: 'x⁴',        ans: ['4x³', '4x3'] },
+  { expr: '√x',        ans: ['1/(2√x)', '1/2√x', '0.5/√x'] },
+  { expr: 'eˣ',        ans: ['eˣ', 'ex'] },
+  { expr: 'ln(x)',     ans: ['1/x'] },
+  { expr: 'sin(x)',    ans: ['cos(x)', 'cosx', 'cos x'] },
+  { expr: 'cos(x)',    ans: ['-sin(x)', '-sinx', '−sin(x)', '-sin x'] },
+  { expr: '1/x',       ans: ['-1/x²', '-1/x2', '−1/x²'] },
+  { expr: '5x³',       ans: ['15x²', '15x2'] },
+  { expr: '2eˣ',       ans: ['2eˣ', '2ex'] },
+  { expr: 'ln(2x)',    ans: ['1/x'] },
+  { expr: 'x⁵',        ans: ['5x⁴', '5x4'] },
+  { expr: '3x²',       ans: ['6x'] },
+];
+
+let derivIdx = 0, derivOk = 0, derivTotal = 0;
+
+function shuffleDerivee() {
+  derivIdx = Math.floor(Math.random() * derivQuestions.length);
+  document.getElementById('deriv-expr').textContent = derivQuestions[derivIdx].expr;
+  document.getElementById('deriv-input').value = '';
+  document.getElementById('deriv-input').focus();
+  const fb = document.getElementById('deriv-fb');
+  fb.className = 'jeu-feedback';
+}
+
+function checkDerivee() {
+  const input = document.getElementById('deriv-input').value.trim().toLowerCase().replace(/\s/g,'');
+  const q = derivQuestions[derivIdx];
+  const fb = document.getElementById('deriv-fb');
+  const correct = q.ans.some(a => a.toLowerCase().replace(/\s/g,'') === input);
+  derivTotal++;
+  if (correct) {
+    derivOk++;
+    fb.textContent = '✅ Bravo ! C\'est bien ' + q.ans[0];
+    fb.className = 'jeu-feedback correct show';
+  } else {
+    fb.textContent = '❌ Raté ! La réponse était : ' + q.ans[0];
+    fb.className = 'jeu-feedback wrong show';
+  }
+  document.getElementById('deriv-score').textContent = derivOk + ' / ' + derivTotal;
+  setTimeout(shuffleDerivee, 1500);
+}
+
+shuffleDerivee();
+
+/* ==================== JEU 2 : FLASHCARDS ==================== */
+const flashcards = [
+  { q: '(xⁿ)\'  = ?',       a: 'n · xⁿ⁻¹' },
+  { q: '(eˣ)\'  = ?',       a: 'eˣ' },
+  { q: '(ln x)\' = ?',      a: '1 / x' },
+  { q: '(sin x)\' = ?',     a: 'cos x' },
+  { q: '(cos x)\' = ?',     a: '−sin x' },
+  { q: '∫ eˣ dx = ?',       a: 'eˣ + C' },
+  { q: '∫ 1/x dx = ?',      a: 'ln|x| + C' },
+  { q: '∫ cos x dx = ?',    a: 'sin x + C' },
+  { q: 'Somme géométrique ?',a: 'u₀(1−qⁿ⁺¹)/(1−q)' },
+  { q: 'Terme géométrique ?',a: 'uₙ = u₀ · qⁿ' },
+  { q: '|z| si z=a+ib ?',   a: '√(a² + b²)' },
+  { q: 'E(X) loi B(n,p) ?', a: 'n · p' },
+  { q: 'P(A∪B) = ?',        a: 'P(A) + P(B) − P(A∩B)' },
+  { q: 'P(A∩B) = ?',        a: 'P(A) × P(B|A)' },
+  { q: 'u·v⃗ produit scalaire en 3D ?', a: 'x₁x₂ + y₁y₂ + z₁z₂' },
+];
+
+let flashDeck = [], flashFlipped = false;
+
+function initFlash() {
+  flashDeck = [...flashcards].sort(() => Math.random() - 0.5);
+  updateFlashCard();
+}
+
+function updateFlashCard() {
+  flashFlipped = false;
+  document.getElementById('flash-card').classList.remove('flipped');
+  if (flashDeck.length === 0) {
+    document.getElementById('flash-front').textContent = '🎉 Toutes les cartes vues !';
+    document.getElementById('flash-back').textContent = 'Recommence !';
+    document.getElementById('flash-remaining').textContent = '0';
+    return;
+  }
+  const c = flashDeck[0];
+  document.getElementById('flash-front').textContent = c.q;
+  document.getElementById('flash-back').textContent = c.a;
+  document.getElementById('flash-remaining').textContent = flashDeck.length;
+}
+
+function flipCard() {
+  flashFlipped = !flashFlipped;
+  document.getElementById('flash-card').classList.toggle('flipped', flashFlipped);
+}
+
+function rateCard(knew) {
+  if (flashDeck.length === 0) { initFlash(); return; }
+  const card = flashDeck.shift();
+  if (!knew) flashDeck.push(card); // remettre à la fin
+  updateFlashCard();
+}
+
+initFlash();
+
+/* ==================== JEU 3 : SPEED QUIZ ==================== */
+const speedQuestions = [
+  { q: 'Dérivée de x³ ?',         opts: ['3x²','2x','x²','3x'], ans: 0 },
+  { q: 'Dérivée de eˣ ?',         opts: ['eˣ','xeˣ','eˣ⁻¹','1'], ans: 0 },
+  { q: '∫ eˣ dx = ?',             opts: ['eˣ + C','xeˣ + C','eˣ⁻¹ + C','e + C'], ans: 0 },
+  { q: '∫ 1/x dx = ?',            opts: ['ln|x| + C','1/x² + C','x⁻¹ + C','−1/x + C'], ans: 0 },
+  { q: 'Limite de (1+1/n)ⁿ ?',    opts: ['e','∞','1','π'], ans: 0 },
+  { q: 'uₙ suite géométrique ?',   opts: ['u₀·qⁿ','u₀+n·r','n·u₀','u₀/n'], ans: 0 },
+  { q: 'P(A∪B) si A∩B=∅ ?',       opts: ['P(A)+P(B)','P(A)·P(B)','P(A)−P(B)','1'], ans: 0 },
+  { q: 'E(X) pour B(n,p) ?',      opts: ['np','n/p','p/n','n+p'], ans: 0 },
+  { q: '|z| si z = 3 + 4i ?',     opts: ['5','7','1','√7'], ans: 0 },
+  { q: 'Dérivée de ln(x) ?',      opts: ['1/x','1/x²','ln(x)','x·ln(x)'], ans: 0 },
+  { q: 'Dérivée de sin(x) ?',     opts: ['cos x','−cos x','−sin x','sin x'], ans: 0 },
+  { q: '∫₀¹ x dx = ?',            opts: ['1/2','1','0','2'], ans: 0 },
+  { q: 'uₙ arithmétique terme ?', opts: ['u₀+n·r','u₀·qⁿ','n·r','u₀/n'], ans: 0 },
+  { q: '(uv)\' = ?',               opts: ["u'v+uv'","u'v'","u'v−uv'","uv'"], ans: 0 },
+  { q: 'Dérivée de cos(x) ?',     opts: ['−sin x','sin x','cos x','−cos x'], ans: 0 },
+];
+
+let speedTimer, speedTimeLeft, speedScore, speedQIdx, speedShuffled;
+
+function startSpeed() {
+  document.getElementById('speed-start-area').style.display = 'none';
+  document.getElementById('speed-result-area').style.display = 'none';
+  document.getElementById('speed-game-area').style.display = 'block';
+  document.getElementById('speed-score-row').style.display = 'flex';
+  speedScore = 0;
+  speedQIdx = 0;
+  speedShuffled = [...speedQuestions].sort(() => Math.random() - 0.5);
+  document.getElementById('speed-score').textContent = '0';
+  nextSpeedQ();
+}
+
+function nextSpeedQ() {
+  if (speedQIdx >= speedShuffled.length) { endSpeed(); return; }
+  const q = speedShuffled[speedQIdx];
+  document.getElementById('speed-q').textContent = q.q;
+  const optsEl = document.getElementById('speed-opts');
+  optsEl.innerHTML = '';
+  // Shuffle options but keep track of correct
+  const indices = [0,1,2,3].sort(() => Math.random() - 0.5);
+  indices.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-btn';
+    btn.textContent = q.opts[i];
+    btn.onclick = () => answerSpeed(i === q.ans, btn, optsEl);
+    optsEl.appendChild(btn);
+  });
+  startSpeedTimer();
+}
+
+function startSpeedTimer() {
+  clearInterval(speedTimer);
+  speedTimeLeft = 10;
+  updateTimerDisplay();
+  speedTimer = setInterval(() => {
+    speedTimeLeft -= 0.1;
+    updateTimerDisplay();
+    if (speedTimeLeft <= 0) {
+      clearInterval(speedTimer);
+      // timeout = wrong
+      speedScore = Math.max(0, speedScore - 1);
+      document.getElementById('speed-score').textContent = speedScore;
+      disableSpeedOpts();
+      setTimeout(() => { speedQIdx++; nextSpeedQ(); }, 800);
+    }
+  }, 100);
+}
+
+function updateTimerDisplay() {
+  const t = Math.ceil(speedTimeLeft);
+  const el = document.getElementById('speed-timer');
+  el.textContent = t;
+  el.className = 'timer-display' + (t <= 3 ? ' danger' : '');
+  const fill = document.getElementById('speed-fill');
+  fill.style.width = (speedTimeLeft / 10 * 100) + '%';
+  fill.className = 'timer-fill' + (t <= 3 ? ' danger' : '');
+}
+
+function answerSpeed(correct, btn, container) {
+  clearInterval(speedTimer);
+  disableSpeedOpts();
+  if (correct) {
+    btn.classList.add('correct');
+    speedScore++;
+  } else {
+    btn.classList.add('wrong');
+    speedScore = Math.max(0, speedScore - 1);
+  }
+  document.getElementById('speed-score').textContent = speedScore;
+  setTimeout(() => { speedQIdx++; nextSpeedQ(); }, 700);
+}
+
+function disableSpeedOpts() {
+  document.querySelectorAll('#speed-opts .mc-btn').forEach(b => b.disabled = true);
+}
+
+function endSpeed() {
+  document.getElementById('speed-game-area').style.display = 'none';
+  document.getElementById('speed-score-row').style.display = 'none';
+  document.getElementById('speed-result-area').style.display = 'block';
+  document.getElementById('speed-final').textContent = speedScore;
+}
+
+/* ==================== JEU 4 : ASSOCIER ==================== */
+const matchPairs = [
+  { fn: 'x²',     deriv: '2x' },
+  { fn: 'eˣ',     deriv: 'eˣ' },
+  { fn: 'ln(x)',  deriv: '1/x' },
+  { fn: 'sin(x)', deriv: 'cos(x)' },
+  { fn: 'cos(x)', deriv: '−sin(x)' },
+];
+
+let matchSelected = null, matchFound = 0;
+
+function initMatch() {
+  matchFound = 0;
+  matchSelected = null;
+  document.getElementById('match-score').textContent = '0 / 5';
+  const fb = document.getElementById('match-fb');
+  fb.className = 'jeu-feedback';
+
+  // Build shuffled left and right columns
+  const lefts = [...matchPairs].sort(() => Math.random() - 0.5);
+  const rights = [...matchPairs].sort(() => Math.random() - 0.5);
+
+  const grid = document.getElementById('match-grid');
+  grid.innerHTML = '';
+
+  lefts.forEach((p, i) => {
+    // Left cell (function)
+    const lCell = document.createElement('div');
+    lCell.className = 'match-item';
+    lCell.textContent = p.fn;
+    lCell.dataset.type = 'fn';
+    lCell.dataset.key = p.fn;
+    lCell.onclick = () => selectMatch(lCell);
+    grid.appendChild(lCell);
+
+    // Right cell (derivative) - from rights[i]
+    const rCell = document.createElement('div');
+    rCell.className = 'match-item';
+    rCell.textContent = rights[i].deriv;
+    rCell.dataset.type = 'deriv';
+    rCell.dataset.key = rights[i].fn; // which fn this deriv belongs to
+    rCell.onclick = () => selectMatch(rCell);
+    grid.appendChild(rCell);
+  });
+}
+
+function selectMatch(cell) {
+  if (cell.classList.contains('matched')) return;
+
+  if (!matchSelected) {
+    // First selection
+    matchSelected = cell;
+    cell.classList.add('selected');
+    return;
+  }
+
+  // Second selection — must be different type
+  if (matchSelected.dataset.type === cell.dataset.type) {
+    matchSelected.classList.remove('selected');
+    matchSelected = cell;
+    cell.classList.add('selected');
+    return;
+  }
+
+  // Check if they match
+  const fnCell = matchSelected.dataset.type === 'fn' ? matchSelected : cell;
+  const dCell  = matchSelected.dataset.type === 'deriv' ? matchSelected : cell;
+
+  const isMatch = fnCell.dataset.key === dCell.dataset.key;
+
+  matchSelected.classList.remove('selected');
+  matchSelected = null;
+
+  const fb = document.getElementById('match-fb');
+
+  if (isMatch) {
+    fnCell.classList.add('matched');
+    dCell.classList.add('matched');
+    matchFound++;
+    document.getElementById('match-score').textContent = matchFound + ' / 5';
+    if (matchFound === 5) {
+      fb.textContent = '🎉 Bravo, toutes les paires trouvées !';
+      fb.className = 'jeu-feedback correct show';
+      setTimeout(initMatch, 2500);
+    }
+  } else {
+    fnCell.classList.add('wrong-match');
+    dCell.classList.add('wrong-match');
+    fb.textContent = '❌ Pas la bonne paire, réessaie !';
+    fb.className = 'jeu-feedback wrong show';
+    setTimeout(() => {
+      fnCell.classList.remove('wrong-match');
+      dCell.classList.remove('wrong-match');
+      fb.className = 'jeu-feedback';
+    }, 700);
+  }
+}
+
+initMatch();
+</script>
+</body>
+</html>
